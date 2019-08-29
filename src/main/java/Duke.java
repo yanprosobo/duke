@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Duke {
     private static List<Task> task1 = new ArrayList<>();
@@ -9,10 +10,17 @@ public class Duke {
         printIndentedHorizontalLine();
         int i = 0;
         for (Task temp: task1) {
-            printIndentMessage(i+1 + ". " + temp.getPrintable());
+            printIndentMessage(i+1 + ". " + temp);
             i++;
         }
         printIndentedHorizontalLine();
+    }
+
+    private static void printMessageAfterAddingTask(Task task) {
+        printIndentedHorizontalLine();
+        printIndentMessage("Got it. I've added this task: ");
+        printIndentMessage(task.toString());
+        printIndentMessage("Now you have " + task1.size() + " task in the list.");
     }
     private static void printIndentMessage (String message) {
         System.out.println("\t" + message);
@@ -52,19 +60,30 @@ public class Duke {
             printList(task1);
         }
         else {
-            String[] values = commands.split(" ");
-            if(values[0].equals("done")) {
+            List<String> inputList = Arrays.asList(commands.split(" "));
+            //String[] values = commands.split(" ");
+            if(inputList.get(0).equals("done")) {
                 printIndentedHorizontalLine();
-                int taskIndex = Integer.parseInt(values[1]);
+                int taskIndex = Integer.parseInt(inputList.get(1));
                 task1.get(taskIndex - 1).markAsDone();
                 printIndentMessage("Nice! I've marked this task as done:");
-                printIndentMessage(task1.get(taskIndex - 1).getPrintable());
+                printIndentMessage(task1.get(taskIndex - 1).toString());
                 printIndentedHorizontalLine();
             }
-            else {
-                Task temptask = new Task(commands);
+            else if (inputList.get(0).equals("todo")){
+                Task temptask = new Todo(inputList.subList(1, inputList.size()));
                 task1.add(temptask);
-                printReply(commands);
+                printMessageAfterAddingTask(temptask);
+            }
+            else if (inputList.get(0).equals("deadline")) {
+                Task temptask = new Deadline(inputList.subList(1, inputList.size()));
+                task1.add(temptask);
+                printMessageAfterAddingTask(temptask);
+            }
+            else if (inputList.get(0).equals("event")) {
+                Task temptask = new Event(inputList.subList(1, inputList.size()));
+                task1.add(temptask);
+                printMessageAfterAddingTask(temptask);
             }
         }
     }
