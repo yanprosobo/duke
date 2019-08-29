@@ -3,7 +3,7 @@ import java.util.List;
 public class Event extends Task {
     private String description;
     private String time;
-
+    
     public Event(List<String> list1) {
         int start = list1.indexOf("/at");
         this.description = String.join(" ", list1.subList(0, start));
