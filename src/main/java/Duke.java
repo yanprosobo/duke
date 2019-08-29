@@ -3,16 +3,15 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Duke {
-    private static List<String> list1 = new ArrayList<>();
+    private static List<Task> task1 = new ArrayList<>();
 
-    private static void printList (List<String> list1) {
+    private static void printList (List<Task> task1) {
         printIndentedHorizontalLine();
         int i = 0;
-        for (String temp: list1) {
-            printIndentMessage(i+1 + ". " + temp);
+        for (Task temp: task1) {
+            printIndentMessage(i+1 + ". " + temp.getPrintable());
             i++;
         }
-
         printIndentedHorizontalLine();
     }
     private static void printIndentMessage (String message) {
@@ -50,11 +49,23 @@ public class Duke {
             return;
         }
         else if (commands.equals(listCommand)){
-            printList(list1);
+            printList(task1);
         }
         else {
-            list1.add(commands);
-            printReply(commands);
+            String[] values = commands.split(" ");
+            if(values[0].equals("done")) {
+                printIndentedHorizontalLine();
+                int taskIndex = Integer.parseInt(values[1]);
+                task1.get(taskIndex - 1).markAsDone();
+                printIndentMessage("Nice! I've marked this task as done:");
+                printIndentMessage(task1.get(taskIndex - 1).getPrintable());
+                printIndentedHorizontalLine();
+            }
+            else {
+                Task temptask = new Task(commands);
+                task1.add(temptask);
+                printReply(commands);
+            }
         }
     }
     public static void main(String[] args) {
