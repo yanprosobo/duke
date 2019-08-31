@@ -8,7 +8,6 @@ public class Todo extends Task {
     }
     @Override
     public String toString() {
-        //return String.format("[T]%s %s", super.toString(), this.description);
         return "[T]" + super.toString() + this.description;
     }
 
