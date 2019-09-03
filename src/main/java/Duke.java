@@ -9,6 +9,19 @@ public class Duke {
     private static void printList (List<Task> task1) {
         printIndentedHorizontalLine();
         int i = 0;
+        if (task1.size() == 0) {
+            printIndentMessage("You have no task in your list");
+        }
+        else {
+            System.out.print("\tHere are the");
+            if (task1.size() == 1) {
+                System.out.print (" task");
+            }
+            else {
+                System.out.print(" tasks");
+            }
+            System.out.print(" in your list:\n");
+        }
         for (Task temp: task1) {
             printIndentMessage(i+1 + ". " + temp);
             i++;
@@ -20,7 +33,16 @@ public class Duke {
         printIndentedHorizontalLine();
         printIndentMessage("Got it. I've added this task: ");
         printIndentMessage(task.toString());
-        printIndentMessage("Now you have " + task1.size() + " task in the list.");
+        System.out.print("\tNow you have " + task1.size());
+        if (task1.size() == 1) {
+            System.out.print(" task");
+        }
+        else {
+            System.out.print(" tasks");
+        }
+        System.out.print(" in the list.\n");
+        //printIndentMessage("Now you have " + task1.size() + " task in the list.");
+        printIndentedHorizontalLine();
     }
     private static void printIndentMessage (String message) {
         System.out.println("\t" + message);
@@ -44,7 +66,7 @@ public class Duke {
         printIndentMessage("added: " + reply);
         printIndentedHorizontalLine();
     }
-    private static void reply() {
+    private static void reply() throws DukeException{
         String terminateCommand = "bye";
         String listCommand = "list";
 
@@ -63,12 +85,19 @@ public class Duke {
             List<String> inputList = Arrays.asList(commands.split(" "));
             //String[] values = commands.split(" ");
             if(inputList.get(0).equals("done")) {
-                printIndentedHorizontalLine();
-                int taskIndex = Integer.parseInt(inputList.get(1));
-                task1.get(taskIndex - 1).markAsDone();
-                printIndentMessage("Nice! I've marked this task as done:");
-                printIndentMessage(task1.get(taskIndex - 1).toString());
-                printIndentedHorizontalLine();
+                try {
+                    int taskIndex = Integer.parseInt(inputList.get(1));
+                    task1.get(taskIndex - 1).markAsDone();
+                    printIndentedHorizontalLine();
+                    printIndentMessage(task1.get(taskIndex - 1).toString());
+                    printIndentedHorizontalLine();
+                }
+                catch (NumberFormatException e) {
+                    throw new DukeException("Please provide a valid format. E.g. done 4");
+                }
+                catch (IndexOutOfBoundsException e) {
+                    throw new DukeException("Please provide the task number. E.g. done 4");
+                }
             }
             else if (inputList.get(0).equals("todo")){
                 Task temptask = new Todo(inputList.subList(1, inputList.size()));
@@ -85,19 +114,26 @@ public class Duke {
                 task1.add(temptask);
                 printMessageAfterAddingTask(temptask);
             }
+            else {
+                throw new DukeException("Please give a proper command: LIST BYE DONE TODO EVENT DEADLINE");
+            }
         }
     }
     public static void main(String[] args) {
-        /*String logo = " ____        _        \n"
+        String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);*/
+        System.out.println("Hello from\n" + logo);
         printWelcome();
         while (true) {
-            reply();
+            try {
+                reply();
+            }
+            catch (DukeException e) {
+                printIndentMessage(e.getMessage());
+            }
         }
     }
-
 }
