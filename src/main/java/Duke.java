@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 public class Duke {
     private static List<Task> task1 = new ArrayList<>();
+    private static Storage storage = new Storage("tasks.txt");
 
     private static void printList (List<Task> task1) {
         printIndentedHorizontalLine();
@@ -117,6 +118,7 @@ public class Duke {
             else {
                 throw new DukeException("Please give a proper command: LIST BYE DONE TODO EVENT DEADLINE");
             }
+            storage.save(task1);
         }
     }
     public static void main(String[] args) {
@@ -127,6 +129,9 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         printWelcome();
+
+        task1 = storage.load();
+
         while (true) {
             try {
                 reply();
