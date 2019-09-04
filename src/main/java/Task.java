@@ -20,6 +20,8 @@ public abstract class Task implements Serializable {
         //return (isDone ? "\u2713" : "\u2718"); //return tick or X symbols
     }
 
+    abstract public boolean containsKeyword(String keyword);
+
     @Override
     public String toString() {
         return  "[" + this.getStatusIcon() + "]";
