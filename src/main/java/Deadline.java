@@ -2,7 +2,7 @@ import java.util.List;
 
 public class Deadline extends Task {
     private String description;
-    private String deadline;
+    private DateTime deadline;
 
     public Deadline(List<String> list1) throws DukeException {
         if (list1.size() <= 2) {
@@ -13,10 +13,10 @@ public class Deadline extends Task {
             throw new DukeException ("Did you forget about deadline name? Please enter the valid format: deadline <deadline name> /at <deadline time>");
         }
         else if (start == -1) {
-            throw new DukeException("Did you forget about /at? Please enter the valid format: deadline <deadline name> /at <deadline time>");
+            throw new DukeException("Did you forget about /by? Please enter the valid format: deadline <deadline name> /at <deadline time>");
         }
         this.description = String.join(" ", list1.subList(0, start));
-        this.deadline = String.join(" ", list1.subList(start+ 1, list1.size()));
+        this.deadline = new DateTime(list1.subList(start+ 1, list1.size()));
     }
 
     @Override
