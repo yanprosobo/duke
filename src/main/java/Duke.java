@@ -90,6 +90,7 @@ public class Duke {
                     int taskIndex = Integer.parseInt(inputList.get(1));
                     task1.get(taskIndex - 1).markAsDone();
                     printIndentedHorizontalLine();
+                    printIndentMessage("Nice!  I've marked this task as done: ");
                     printIndentMessage(task1.get(taskIndex - 1).toString());
                     printIndentedHorizontalLine();
                 }
@@ -98,6 +99,23 @@ public class Duke {
                 }
                 catch (IndexOutOfBoundsException e) {
                     throw new DukeException("Please provide the task number. E.g. done 4");
+                }
+            }
+            else if (inputList.get(0).equals("delete")){
+                try {
+                    int taskIndex = Integer.parseInt(inputList.get(1));
+                    //task1.get(taskIndex - 1).markAsDone();
+                    task1.remove(task1.get(taskIndex - 1));
+                    printIndentedHorizontalLine();
+                    printIndentMessage("Noted. I've removed this task: ");
+                    printIndentMessage(task1.get(taskIndex - 1).toString());
+                    printIndentedHorizontalLine();
+                }
+                catch (NumberFormatException e) {
+                    throw new DukeException("Please provide a valid format. E.g. delete 4");
+                }
+                catch (IndexOutOfBoundsException e) {
+                    throw new DukeException("Please provide the task number. E.g. delete 4");
                 }
             }
             else if (inputList.get(0).equals("todo")){
