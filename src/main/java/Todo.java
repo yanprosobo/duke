@@ -9,6 +9,12 @@ public class Todo extends Task {
         }
         this.description = String.join(" ", list1);
     }
+
+    @Override
+    public boolean containsKeyword(String keyword) {
+        return this.description.contains(keyword);
+    }
+
     @Override
     public String toString() {
         return "[T]" + super.toString() + this.description;

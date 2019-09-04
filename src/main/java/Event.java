@@ -26,6 +26,11 @@ public class Event extends Task {
     }
 
     @Override
+    public boolean containsKeyword(String keyword) {
+        return this.description.contains(keyword);
+    }
+
+    @Override
     public String toString() {
         return "[E]" + super.toString() + this.description + " (at: " + this.event_start + " - " + this.event_end + ")";
     }

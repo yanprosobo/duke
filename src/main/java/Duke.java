@@ -2,32 +2,20 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class Duke {
     private static List<Task> task1 = new ArrayList<>();
     private static Storage storage = new Storage("tasks.txt");
 
     private static void printList (List<Task> task1) {
-        printIndentedHorizontalLine();
+        //printIndentedHorizontalLine();
         int i = 0;
-        if (task1.size() == 0) {
-            printIndentMessage("You have no task in your list");
-        }
-        else {
-            System.out.print("\tHere are the");
-            if (task1.size() == 1) {
-                System.out.print (" task");
-            }
-            else {
-                System.out.print(" tasks");
-            }
-            System.out.print(" in your list:\n");
-        }
         for (Task temp: task1) {
             printIndentMessage(i+1 + ". " + temp);
             i++;
         }
-        printIndentedHorizontalLine();
+        //printIndentedHorizontalLine();
     }
 
     private static void printMessageAfterAddingTask(Task task) {
@@ -80,7 +68,22 @@ public class Duke {
             return;
         }
         else if (commands.equals(listCommand)){
+            printIndentedHorizontalLine();
+            if (task1.size() == 0) {
+                printIndentMessage("You have no task in your list");
+            }
+            else {
+                System.out.print("\tHere are the");
+                if (task1.size() == 1) {
+                    System.out.print (" task");
+                }
+                else {
+                    System.out.print(" tasks");
+                }
+                System.out.print(" in your list:\n");
+            }
             printList(task1);
+            printIndentedHorizontalLine();
         }
         else {
             List<String> inputList = Arrays.asList(commands.split(" "));
@@ -101,7 +104,7 @@ public class Duke {
                     throw new DukeException("Please provide the task number. E.g. done 4");
                 }
             }
-            else if (inputList.get(0).equals("delete")){
+            else if (inputList.get(0).equals("delete")) {
                 try {
                     int taskIndex = Integer.parseInt(inputList.get(1));
                     //task1.get(taskIndex - 1).markAsDone();
@@ -110,12 +113,29 @@ public class Duke {
                     printIndentMessage("Noted. I've removed this task: ");
                     printIndentMessage(task1.get(taskIndex - 1).toString());
                     printIndentedHorizontalLine();
-                }
-                catch (NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     throw new DukeException("Please provide a valid format. E.g. delete 4");
-                }
-                catch (IndexOutOfBoundsException e) {
+                } catch (IndexOutOfBoundsException e) {
                     throw new DukeException("Please provide the task number. E.g. delete 4");
+                }
+            }
+            else if (inputList.get(0).equals("find")){
+                if (inputList.size() > 1) {
+                    String searchTerm = String.join(" ", inputList.subList(1, inputList.size()));
+                    List<Task> filteredTasks =
+                            task1.stream()
+                                    .filter(task -> task.containsKeyword(searchTerm))
+                                    .collect(Collectors.toList());
+                    printIndentedHorizontalLine();
+                    if (filteredTasks.size() > 0) {
+                        printIndentMessage("Here are the matching tasks in your list:");
+                        printList(filteredTasks);
+                    } else {
+                        printIndentMessage("There are no matching task.");
+                    }
+                    printIndentedHorizontalLine();
+                } else {
+                    throw new DukeException("Please enter at least a keyword to search.");
                 }
             }
             else if (inputList.get(0).equals("todo")){
