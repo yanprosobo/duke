@@ -2,9 +2,11 @@ import java.util.List;
 
 public class AddCommand extends Command {
     private List <String> inputlist;
+
     public AddCommand (List<String> inputlist) {
         this.inputlist = inputlist;
     }
+
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
         switch(inputlist.get(0)){
