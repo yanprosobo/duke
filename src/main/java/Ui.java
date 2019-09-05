@@ -12,7 +12,7 @@ public class Ui {
         System.out.println("\t" + message);
     }
 
-    public void printIndentedHorizontalLine() {
+    public void showLine() {
         printIndentedMessage("____________________________________________________________");
     }
 
@@ -24,10 +24,10 @@ public class Ui {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
 
-        printIndentedHorizontalLine();
+        showLine();
         printIndentedMessage("Hello! I'm Duke");
         printIndentedMessage("What can I do for you?");
-        printIndentedHorizontalLine();
+        showLine();
     }
 
     public void printGoodBye() {
