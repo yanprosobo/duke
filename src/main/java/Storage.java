@@ -12,38 +12,34 @@ public class Storage {
     // Unchecked type coercion is necessary here.
     // And possible cast exceptions are handled
     @SuppressWarnings("unchecked")
-    public List<Task> load() {
+    public TaskList load() throws DukeException{
         try {
             FileInputStream fileStream = new FileInputStream(this.fileName);
             ObjectInputStream objectStream = new ObjectInputStream(fileStream);
-            List<Task> tasks = (List<Task>) objectStream.readObject();
+            TaskList tasks = (TaskList) objectStream.readObject();
             objectStream.close();
             return tasks;
         } catch (FileNotFoundException e) {
-            System.err.println("File doesn't exist, not loading anything.");
-            return new ArrayList<>();
+            throw new DukeException("File doesn't exist, not loading anything.");
         } catch (IOException e) {
-            System.err.println("An unexpected error occurred when reading the file, not loading anything. " + e);
-            return new ArrayList<>();
+            throw new DukeException("An unexpected error occurred when reading the file, not loading anything. " + e);
         } catch (ClassNotFoundException e) {
-            System.err.println("Invalid file contents, not loading anything.");
-            return new ArrayList<>();
+            throw new DukeException("Invalid file contents, not loading anything.");
         } catch (ClassCastException e) {
-            System.err.println("Invalid file contents, not loading anything.");
-            return new ArrayList<>();
+            throw new DukeException("Invalid file contents, not loading anything.");
         }
     }
 
-    public void save(List<Task> tasks) {
+    public void save(TaskList tasks) throws DukeException {
         try {
             FileOutputStream fileStream = new FileOutputStream(this.fileName);
             ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
             objectStream.writeObject(tasks);
             objectStream.close();
         } catch (FileNotFoundException e) {
-            System.err.println("Unable to open " + this.fileName);
+            throw new DukeException("Unable to open " + this.fileName);
         } catch (IOException e) {
-            System.err.println("An unexpected error occurred when writing to the file. " + e);
+            throw new DukeException("An unexpected error occurred when writing to the file. " + e);
         }
     }
 }

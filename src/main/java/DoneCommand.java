@@ -14,7 +14,7 @@ public class DoneCommand extends Command {
             Task donetask = taskList.get(taskIndex - 1);
             donetask.markAsDone();
             ui.showDoneTask(donetask);
-            storage.save((List<Task>) taskList);
+            storage.save((TaskList) taskList);
         } catch (NumberFormatException e) {
             throw new DukeException("Please supply a number. Eg: done 2");
         } catch (IndexOutOfBoundsException e) {

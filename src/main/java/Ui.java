@@ -38,7 +38,12 @@ public class Ui {
     }
 
     public void showTaskList(List<Task> tasks) {
-        printIndented("Here are the tasks in your list:");
+        if (tasks.size() == 0) {
+            printIndented("You have no task in your list.");
+        }
+        else {
+            printIndented("Here are the tasks in your list:");
+        }
         showTasks(tasks);
     }
 

@@ -12,19 +12,19 @@ public class AddCommand extends Command {
                 Todo newTodo = new Todo(inputlist.subList(1, inputlist.size()));
                 taskList.add(newTodo);
                 ui.showTaskAdded(taskList.getTaskList(), newTodo);
-                storage.save((List<Task>) taskList);
+                storage.save((TaskList) taskList);
                 break;
             case "deadline":
                 Deadline newDeadline = new Deadline(inputlist.subList(1, inputlist.size()));
                 taskList.add(newDeadline);
                 ui.showTaskAdded(taskList.getTaskList(), newDeadline);
-                storage.save((List<Task>) taskList);
+                storage.save((TaskList) taskList);
                 break;
             case "event":
                 Event newEvent = new Event(inputlist.subList(1, inputlist.size()));
                 taskList.add(newEvent);
                 ui.showTaskAdded(taskList.getTaskList(), newEvent);
-                storage.save((List<Task>) taskList);
+                storage.save((TaskList) taskList);
         }
     }
 }
