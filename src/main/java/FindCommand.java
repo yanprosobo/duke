@@ -11,10 +11,10 @@ public class FindCommand extends Command {
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
         if (inputlist.size() > 0) {
-            String searchTerm = String.join(" ", inputlist.subList(0, inputlist.size()));
+            String keyword = String.join(" ", inputlist.subList(0, inputlist.size()));
             List<Task> filteredTasks =
                     taskList.getTaskList().stream()
-                            .filter(task -> task.containsKeyword(searchTerm))
+                            .filter(task -> task.containsKeyword(keyword))
                             .collect(Collectors.toList());
             if (filteredTasks.size() > 0) {
                 ui.showSearchResult(filteredTasks);
