@@ -8,84 +8,87 @@ public class Ui {
         sc = new Scanner(System.in);
     }
 
-    public void beginBlock() {
-        printHR();
+    private void printIndentedMessage(String message) {
+        System.out.println("\t" + message);
     }
 
-    public void endBlock() {
-        printHR();
+    public void printIndentedHorizontalLine() {
+        printIndentedMessage("____________________________________________________________");
     }
 
     public void showWelcome() {
-        beginBlock();
-        printIndented("Hello! I'm Duke");
-        printIndented("What can I do for you?");
-        endBlock();
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+        System.out.println("Hello from\n" + logo);
+
+        printIndentedHorizontalLine();
+        printIndentedMessage("Hello! I'm Duke");
+        printIndentedMessage("What can I do for you?");
+        printIndentedHorizontalLine();
     }
 
-    public void showBye() {
-        printIndented("Bye. Hope to see you again soon!");
+    public void printGoodBye() {
+        printIndentedMessage("Bye. Hope to see you again soon!");
     }
 
     public void showError(String message) {
-        printIndented(message);
+        printIndentedMessage(message);
     }
 
-    public void showTaskAdded(List<Task> tasks, Task task) {
-        printIndented("Got it . I've added this task:");
-        printIndented("  " + task);
-        showNumTasks(tasks);
+    public void showTaskAdded(List<Task> task1, Task task) {
+        printIndentedMessage("Got it . I've added this task: ");
+        printIndentedMessage(task.toString());
+        printIndentedMessage("Now you have " + task1.size() + ((task1.size() == 1) ?  " tasks" : " task") + " in the list");
+        //printIndentMessage("Now you have " + task1.size() + " task in the list.");
     }
 
-    public void showTaskList(List<Task> tasks) {
-        if (tasks.size() == 0) {
-            printIndented("You have no task in your list.");
+    public void showTaskList(List<Task> task1) {
+        if (task1.size() == 0) {
+            printIndentedMessage("You have no task in your list.");
         }
         else {
-            printIndented("Here are the tasks in your list:");
+            printIndentedMessage("Here are the tasks in your list:");
         }
-        showTasks(tasks);
+        printList(task1);
     }
 
-    public void showSearchResult(List<Task> tasks) {
-        printIndented("Here are the matching tasks in your list:");
-        showTasks(tasks);
+    public void showSearchResult(List<Task> task1) {
+        printIndentedMessage("Here are the matching tasks in your list:");
+        printList(task1);
     }
 
-    public void showDeletedTask(List<Task> tasks, Task task) {
-        printIndented("Noted. I've removed this task:");
-        printIndented("  " + task);
-        showNumTasks(tasks);
+    public void showDeletedTask(List<Task> task1, Task task) {
+        printIndentedMessage("Noted. I've removed this task:");
+        printIndentedMessage(task.toString());
+        printIndentedMessage("Now you have " + task1.size() + ((task1.size() == 1) ?  " tasks" : " task") + " in the list");
     }
 
     public void showDoneTask(Task task) {
-        printIndented("Nice! I've marked this task as done:");
-        printIndented("  " + task);
+        printIndentedMessage("Nice! I've marked this task as done:");
+        printIndentedMessage(task.toString());
     }
 
     public String readCommand() {
         return sc.nextLine();
     }
 
-    private void printIndented(String line) {
-        System.out.println("    " + line);
-    }
-
-    private void showNumTasks(List<Task> tasks) {
-        printIndented("Now you have "
-                + tasks.size()
-                + (tasks.size() > 1 ? " tasks" : " task")
+    private void showNumTasks(List<Task> task1) {
+        printIndentedMessage("Now you have "
+                + task1.size()
+                + (task1.size() > 1 ? " tasks" : " task")
                 + " in the list.");
     }
 
-    private void showTasks(List<Task> tasks) {
-        int counter = 1;
-        for (Task task : tasks) {
-            printIndented(counter++ + ". " + task);
+    private void printList(List<Task> task1) {
+        //printIndentedHorizontalLine();
+        int i = 0;
+        for (Task temp : task1) {
+            printIndentedMessage(i+1 + ". " + temp);
+            i++;
         }
-    }
-
-    private void printHR() {
-        printIndented("____________________________________________________________");
+        //printIndentedHorizontalLine();
     }
 }

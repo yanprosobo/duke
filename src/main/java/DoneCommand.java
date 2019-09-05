@@ -18,7 +18,7 @@ public class DoneCommand extends Command {
         } catch (NumberFormatException e) {
             throw new DukeException("Please supply a number. Eg: done 2");
         } catch (IndexOutOfBoundsException e) {
-            throw new DukeException("Please supply a valid number.");
+            throw new DukeException("Please supply a valid number. Enter 'List' to show current lists of tasks.");
         }
     }
 }

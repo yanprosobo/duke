@@ -22,14 +22,14 @@ public class Duke {
         while (!isExit) {
             try {
                 String fullCommand = ui.readCommand();
-                ui.beginBlock();
+                ui.printIndentedHorizontalLine();
                 Command c = Parser.parse(fullCommand);
                 c.execute(tasks, ui, storage);
                 isExit = c.isExit();
             } catch (DukeException e) {
                 ui.showError(e.getMessage());
             } finally {
-                ui.endBlock();
+                ui.printIndentedHorizontalLine();
             }
         }
     }
